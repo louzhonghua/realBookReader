@@ -47,7 +47,7 @@ export default function UploadScreen({ onFileSelect }) {
 
   return (
     <div className="upload-screen">
-      {/* Animated background */}
+      {/* 动态背景 */}
       <div className="upload-bg">
         <div className="bg-orb bg-orb-1" />
         <div className="bg-orb bg-orb-2" />

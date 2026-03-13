@@ -1,14 +1,14 @@
 import { useState, useCallback } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Set the worker source
+// 设置 worker 源
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.mjs',
   import.meta.url
 ).toString();
 
 /**
- * Hook to render a PDF file into an array of page images.
+ * 将 PDF 渲染为页面图片数组的 Hook
  * @returns {{ pages, pageSize, totalPages, loading, progress, error, renderPdf }}
  */
 export function usePdfRenderer() {
@@ -32,13 +32,13 @@ export function usePdfRenderer() {
       setTotalPages(total);
 
       const renderedPages = [];
-      const scale = 2; // High-res rendering
+      const scale = 2; // 高清渲染
 
       for (let i = 1; i <= total; i++) {
         const page = await pdf.getPage(i);
         const viewport = page.getViewport({ scale });
 
-        // Store the original page size (from the first page)
+        // 保存原始页面尺寸（取第一页）
         if (i === 1) {
           setPageSize({
             width: viewport.width / scale,
@@ -56,7 +56,7 @@ export function usePdfRenderer() {
           viewport,
         }).promise;
 
-        // Convert canvas to blob URL for better memory efficiency
+        // 将 canvas 转为 blob URL 以提升内存效率
         const blob = await new Promise((resolve) =>
           canvas.toBlob(resolve, 'image/png')
         );

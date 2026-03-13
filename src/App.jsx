@@ -6,7 +6,7 @@ import { usePdfRenderer } from './hooks/usePdfRenderer';
 import './App.css';
 
 function App() {
-  const [stage, setStage] = useState('upload'); // 'upload' | 'loading' | 'reading'
+  const [stage, setStage] = useState('upload'); // 当前阶段：'upload' | 'loading' | 'reading'
   const [currentPage, setCurrentPage] = useState(0);
   const { pages, pageSize, totalPages, loading, progress, error, renderPdf } =
     usePdfRenderer();
@@ -30,7 +30,7 @@ function App() {
     setCurrentPage(0);
   }, []);
 
-  // FlipBook navigation helpers
+  // FlipBook 翻页辅助
   const flipNext = useCallback(() => {
     const container = document.querySelector('.flipbook-container');
     container?._flipNext?.();

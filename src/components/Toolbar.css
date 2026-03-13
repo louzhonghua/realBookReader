@@ -1,4 +1,4 @@
-/* ========== Toolbar ========== */
+/* ========== 工具栏 ========== */
 .toolbar {
   position: fixed;
   bottom: 0;
@@ -42,7 +42,7 @@
   justify-content: flex-end;
 }
 
-/* Toolbar buttons */
+/* 工具栏按钮 */
 .toolbar-btn {
   width: 36px;
   height: 36px;
@@ -69,7 +69,7 @@
   color: var(--accent);
 }
 
-/* Page indicator */
+/* 页码指示 */
 .page-indicator {
   font-size: 13px;
   font-weight: 500;
@@ -79,7 +79,7 @@
   letter-spacing: 0.5px;
 }
 
-/* ========== Thumbnail Overlay ========== */
+/* ========== 缩略图遮罩 ========== */
 .thumbnail-overlay {
   position: fixed;
   inset: 0;

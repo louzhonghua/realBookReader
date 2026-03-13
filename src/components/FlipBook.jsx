@@ -6,7 +6,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
   const bookRef = useRef(null);
   const pageFlipRef = useRef(null);
 
-  // Calculate display dimensions to fit viewport
+  // 根据视口计算展示尺寸
   const getDisplaySize = useCallback(() => {
     if (!pageSize.width || !pageSize.height) return { width: 500, height: 700 };
 
@@ -15,21 +15,21 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
 
     const isFullscreen = !!document.fullscreenElement;
 
-    // Reserve space for toolbar (60px) and padding
+    // 为工具栏与留白预留空间
     const paddingWidth = isFullscreen ? 20 : 80;
     const paddingHeight = isFullscreen ? 80 : 140;
 
     const availableWidth = viewportWidth - paddingWidth;
     const availableHeight = viewportHeight - paddingHeight;
 
-    // Calculate single page dimensions maintaining aspect ratio
+    // 按比例计算单页尺寸
     const pageAspect = pageSize.width / pageSize.height;
 
-    // We show 2 pages side by side, so each page gets half the available width
+    // 双页并排展示，每页使用一半可用宽度
     let pageWidth = availableWidth / 2;
     let pageHeight = pageWidth / pageAspect;
 
-    // If too tall, constrain by height
+    // 若高度超出，则按高度约束
     if (pageHeight > availableHeight) {
       pageHeight = availableHeight;
       pageWidth = pageHeight * pageAspect;
@@ -47,16 +47,16 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
     const container = bookRef.current;
     const size = getDisplaySize();
 
-    // Clean up previous instance
+    // 清理旧实例
     if (pageFlipRef.current) {
       pageFlipRef.current.destroy();
       pageFlipRef.current = null;
     }
 
-    // Clear the container
+    // 清空容器
     container.innerHTML = '';
 
-    // Create page elements
+    // 创建页面元素
     const imageReadyPromises = [];
     pages.forEach((src, index) => {
       const pageDiv = document.createElement('div');
@@ -83,7 +83,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
       container.appendChild(pageDiv);
     });
 
-    // Handle resize
+    // 处理尺寸变化
     const handleResize = () => {
       const newSize = getDisplaySize();
       container.style.width = `${newSize.width * 2}px`;
@@ -152,7 +152,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
     };
   }, [pages, pageSize, getDisplaySize, onPageChange]);
 
-  // Expose methods via imperative handle pattern
+  // 暴露翻页方法供外部调用
   const flipNext = useCallback(() => {
     pageFlipRef.current?.flipNext();
   }, []);
@@ -165,7 +165,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
     pageFlipRef.current?.flip(pageIndex);
   }, []);
 
-  // Attach methods to ref for parent access
+  // 将方法挂载到容器上
   useEffect(() => {
     if (bookRef.current) {
       bookRef.current._flipNext = flipNext;
@@ -178,13 +178,13 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
 
   return (
     <div className="flipbook-wrapper">
-      {/* Book spine shadow */}
+      {/* 书脊阴影 */}
       <div
         className="book-spine"
         style={{ height: size.height }}
       />
 
-      {/* Book pages container */}
+      {/* 书页容器 */}
       <div
         className="flipbook-container"
         ref={bookRef}
@@ -194,7 +194,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
         }}
       />
 
-      {/* Navigation arrows */}
+      {/* 翻页箭头 */}
       <button
         className="nav-arrow nav-arrow-left"
         onClick={flipPrev}

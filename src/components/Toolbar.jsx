@@ -20,7 +20,7 @@ export default function Toolbar({
     }
   };
 
-  // Generate page display info (book shows 2 pages at a time)
+  // 生成页码显示信息（书本双页展示）
   const pageDisplay = useMemo(() => {
     if (currentPage === 0) return '封面';
     if (currentPage >= totalPages - 1) return '封底';
@@ -31,7 +31,7 @@ export default function Toolbar({
     <>
       <div className="toolbar">
         <div className="toolbar-inner">
-          {/* Left section */}
+          {/* 左侧区域 */}
           <div className="toolbar-section toolbar-left">
             <button className="toolbar-btn" onClick={onClose} title="返回">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -40,7 +40,7 @@ export default function Toolbar({
             </button>
           </div>
 
-          {/* Center section */}
+          {/* 中间区域 */}
           <div className="toolbar-section toolbar-center">
             <button className="toolbar-btn" onClick={onFlipPrev} title="上一页">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -57,7 +57,7 @@ export default function Toolbar({
             </button>
           </div>
 
-          {/* Right section */}
+          {/* 右侧区域 */}
           <div className="toolbar-section toolbar-right">
             <button
               className={`toolbar-btn ${showThumbnails ? 'active' : ''}`}
@@ -81,7 +81,7 @@ export default function Toolbar({
         </div>
       </div>
 
-      {/* Thumbnail Grid Overlay */}
+      {/* 缩略图网格遮罩 */}
       {showThumbnails && (
         <div className="thumbnail-overlay" onClick={() => setShowThumbnails(false)}>
           <div className="thumbnail-grid" onClick={(e) => e.stopPropagation()}>
