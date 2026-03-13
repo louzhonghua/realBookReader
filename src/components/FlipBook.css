@@ -1,0 +1,105 @@
+.flipbook-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  user-select: none;
+}
+
+/* Book container */
+.flipbook-container {
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* Book spine center shadow */
+.book-spine {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  z-index: 10;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 0, 0, 0.15) 20%,
+    rgba(0, 0, 0, 0.3) 45%,
+    rgba(0, 0, 0, 0.35) 50%,
+    rgba(0, 0, 0, 0.3) 55%,
+    rgba(0, 0, 0, 0.15) 80%,
+    transparent
+  );
+}
+
+/* Page items */
+.page-item {
+  background: #fff;
+  overflow: hidden;
+}
+
+.page-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #fff;
+}
+
+/* Hard cover pages */
+.page-item[data-density="hard"] {
+  background: linear-gradient(135deg, #4a8c5c, #3d7a4e);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.page-item[data-density="hard"] img {
+  border: 8px solid #4a8c5c;
+  box-sizing: border-box;
+}
+
+/* Navigation arrows */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(26, 27, 46, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  opacity: 0;
+}
+
+.flipbook-wrapper:hover .nav-arrow {
+  opacity: 1;
+}
+
+.nav-arrow:hover {
+  background: rgba(108, 99, 255, 0.3);
+  border-color: rgba(108, 99, 255, 0.5);
+  color: var(--text-primary);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.nav-arrow-left {
+  left: 20px;
+}
+
+.nav-arrow-right {
+  right: 20px;
+}
