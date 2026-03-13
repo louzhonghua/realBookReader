@@ -5,7 +5,6 @@ import './FlipBook.css';
 export default function FlipBook({ pages, pageSize, onPageChange }) {
   const bookRef = useRef(null);
   const pageFlipRef = useRef(null);
-  const [isReady, setIsReady] = useState(false);
 
   // Calculate display dimensions to fit viewport
   const getDisplaySize = useCallback(() => {
@@ -14,9 +13,14 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    // Reserve space for toolbar (60px) and padding (80px)
-    const availableWidth = viewportWidth - 80;
-    const availableHeight = viewportHeight - 140;
+    const isFullscreen = !!document.fullscreenElement;
+
+    // Reserve space for toolbar (60px) and padding
+    const paddingWidth = isFullscreen ? 20 : 80;
+    const paddingHeight = isFullscreen ? 80 : 140;
+
+    const availableWidth = viewportWidth - paddingWidth;
+    const availableHeight = viewportHeight - paddingHeight;
 
     // Calculate single page dimensions maintaining aspect ratio
     const pageAspect = pageSize.width / pageSize.height;
@@ -84,10 +88,21 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
       const newSize = getDisplaySize();
       container.style.width = `${newSize.width * 2}px`;
       container.style.height = `${newSize.height}px`;
+
+      const spine = container.parentElement?.querySelector('.book-spine');
+      if (spine) {
+        spine.style.height = `${newSize.height}px`;
+      }
+
       pageFlipRef.current?.updateFromHtml(container.querySelectorAll('.page-item'));
+      
+      if (typeof pageFlipRef.current?.update === 'function') {
+        pageFlipRef.current.update();
+      }
     };
 
     window.addEventListener('resize', handleResize);
+    document.addEventListener('fullscreenchange', handleResize);
 
     let cancelled = false;
     (async () => {
@@ -97,11 +112,11 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
       const pageFlip = new PageFlip(container, {
         width: size.width,
         height: size.height,
-        size: 'fixed',
-        minWidth: 300,
-        maxWidth: 1200,
-        minHeight: 400,
-        maxHeight: 1600,
+        size: 'stretch',
+        minWidth: 10,
+        maxWidth: 5000,
+        minHeight: 10,
+        maxHeight: 5000,
         showCover: true,
         flippingTime: 800,
         useMouseEvents: true,
@@ -112,7 +127,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
         clickEventForward: false,
         usePortrait: false,
         startZIndex: 0,
-        autoSize: false,
+        autoSize: true,
         drawShadow: true,
         startPage: 0,
       });
@@ -124,12 +139,12 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
       });
 
       pageFlipRef.current = pageFlip;
-      setIsReady(true);
     })();
 
     return () => {
       cancelled = true;
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('fullscreenchange', handleResize);
       if (pageFlipRef.current) {
         pageFlipRef.current.destroy();
         pageFlipRef.current = null;
