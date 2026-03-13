@@ -6,10 +6,10 @@
   right: 0;
   z-index: 100;
   padding: 12px 24px;
-  background: rgba(18, 19, 42, 0.85);
+  background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--border);
 }
 
 .toolbar-inner {
@@ -47,8 +47,8 @@
   width: 36px;
   height: 36px;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  background: #ffffff;
   color: var(--text-secondary);
   cursor: pointer;
   display: flex;
@@ -58,15 +58,15 @@
 }
 
 .toolbar-btn:hover {
-  background: rgba(108, 99, 255, 0.2);
-  border-color: rgba(108, 99, 255, 0.4);
-  color: var(--text-primary);
+  background: rgba(0, 122, 255, 0.08);
+  border-color: rgba(0, 122, 255, 0.35);
+  color: var(--accent);
 }
 
 .toolbar-btn.active {
-  background: rgba(108, 99, 255, 0.3);
-  border-color: rgba(108, 99, 255, 0.5);
-  color: var(--accent-light);
+  background: rgba(0, 122, 255, 0.12);
+  border-color: rgba(0, 122, 255, 0.45);
+  color: var(--accent);
 }
 
 /* Page indicator */
@@ -84,7 +84,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   display: flex;
@@ -102,10 +102,10 @@
   width: 90vw;
   max-width: 900px;
   max-height: 80vh;
-  background: rgba(26, 27, 50, 0.95);
+  background: #ffffff;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
@@ -118,7 +118,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--border);
 }
 
 .thumbnail-header h3 {
@@ -133,7 +133,7 @@
   height: 32px;
   border-radius: 8px;
   border: none;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.04);
   color: var(--text-secondary);
   cursor: pointer;
   display: flex;
@@ -143,8 +143,8 @@
 }
 
 .thumbnail-close:hover {
-  background: rgba(255, 75, 75, 0.2);
-  color: #ff6b6b;
+  background: rgba(255, 59, 48, 0.15);
+  color: #ff3b30;
 }
 
 .thumbnail-list {
@@ -163,18 +163,18 @@
   cursor: pointer;
   border: 2px solid transparent;
   transition: all var(--transition);
-  background: rgba(255, 255, 255, 0.03);
+  background: #f2f2f7;
 }
 
 .thumbnail-item:hover {
-  border-color: rgba(108, 99, 255, 0.5);
+  border-color: rgba(0, 122, 255, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
 .thumbnail-item.active {
   border-color: var(--accent);
-  box-shadow: 0 0 12px rgba(108, 99, 255, 0.3);
+  box-shadow: 0 0 12px rgba(0, 122, 255, 0.2);
 }
 
 .thumbnail-item img {
