@@ -17,37 +17,52 @@
   border-radius: 6px;
 }
 
-/* 书脊中部阴影 */
-.book-spine {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  z-index: 10;
-  pointer-events: none;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(0, 0, 0, 0.08) 20%,
-    rgba(0, 0, 0, 0.16) 45%,
-    rgba(0, 0, 0, 0.18) 50%,
-    rgba(0, 0, 0, 0.16) 55%,
-    rgba(0, 0, 0, 0.08) 80%,
-    transparent
-  );
-}
+/* (Old static `.book-spine` removed to fix flipping overlap artifact) */
 
 .page-item {
+  position: relative;
   background: #ffffff !important; /* Force opaque background */
   background-color: #ffffff !important;
   overflow: hidden;
   box-shadow: inset 0 0 2px rgba(0,0,0,0.1); /* Slight inner shadow to define edge */
 }
 
+/* 动态书脊内侧阴影（避免翻页时穿透覆盖） */
+.page-item.page-left::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 25px;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.08) 50%, rgba(0, 0, 0, 0.22) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.page-item.page-right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 25px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.08) 50%, transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+
 /* 确保 page-flip 内部生成的层也是不透明的 */
 .stf__item,
-.stf__block {
+.stf__block,
+.stf__wrapper {
   background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.stf__item * {
+  /* 防止内部由于默认属性导致的透明化 */
+  background-color: #ffffff;
 }
 
 .page-item img {

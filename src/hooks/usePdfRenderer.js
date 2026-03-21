@@ -51,14 +51,18 @@ export function usePdfRenderer() {
         canvas.width = viewport.width;
         canvas.height = viewport.height;
 
+        // 绘制白色背景，防止生成带透明通道的PNG图片
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
         await page.render({
           canvasContext: ctx,
           viewport,
         }).promise;
 
-        // 将 canvas 转为 blob URL 以提升内存效率
+        // 将 canvas 转为 blob URL 以提升内存效率 (此处可以直接用 jpeg 进一步去透明通道，并缩小体积)
         const blob = await new Promise((resolve) =>
-          canvas.toBlob(resolve, 'image/png')
+          canvas.toBlob(resolve, 'image/jpeg', 0.9)
         );
         const url = URL.createObjectURL(blob);
         renderedPages.push(url);

@@ -60,7 +60,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
     const imageReadyPromises = [];
     pages.forEach((src, index) => {
       const pageDiv = document.createElement('div');
-      pageDiv.className = 'page-item';
+      pageDiv.className = `page-item ${index % 2 === 0 ? 'page-right' : 'page-left'}`;
       pageDiv.setAttribute('data-density', index === 0 || index === pages.length - 1 ? 'hard' : 'soft');
 
       const img = document.createElement('img');
@@ -88,11 +88,6 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
       const newSize = getDisplaySize();
       container.style.width = `${newSize.width * 2}px`;
       container.style.height = `${newSize.height}px`;
-
-      const spine = container.parentElement?.querySelector('.book-spine');
-      if (spine) {
-        spine.style.height = `${newSize.height}px`;
-      }
 
       pageFlipRef.current?.updateFromHtml(container.querySelectorAll('.page-item'));
       
@@ -178,12 +173,6 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
 
   return (
     <div className="flipbook-wrapper">
-      {/* 书脊阴影 */}
-      <div
-        className="book-spine"
-        style={{ height: size.height }}
-      />
-
       {/* 书页容器 */}
       <div
         className="flipbook-container"
