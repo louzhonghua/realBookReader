@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import LazyThumbnail from './LazyThumbnail';
 import './Toolbar.css';
 
 export default function Toolbar({
@@ -81,10 +82,11 @@ export default function Toolbar({
         </div>
       </div>
 
-      {/* 缩略图网格遮罩 */}
+      {/* 缩略图侧边栏 */}
       {showThumbnails && (
-        <div className="thumbnail-overlay" onClick={() => setShowThumbnails(false)}>
-          <div className="thumbnail-grid" onClick={(e) => e.stopPropagation()}>
+        <>
+          <div className="thumbnail-backdrop" onClick={() => setShowThumbnails(false)} />
+          <div className="thumbnail-sidebar">
             <div className="thumbnail-header">
               <h3>页面导航</h3>
               <button className="thumbnail-close" onClick={() => setShowThumbnails(false)}>
@@ -95,21 +97,22 @@ export default function Toolbar({
             </div>
             <div className="thumbnail-list">
               {pages.map((src, index) => (
-                <div
+                <LazyThumbnail
                   key={index}
-                  className={`thumbnail-item ${index === currentPage ? 'active' : ''}`}
+                  src={src}
+                  index={index}
+                  currentPage={currentPage}
                   onClick={() => {
                     onFlipToPage(index);
-                    setShowThumbnails(false);
+                    if (window.innerWidth <= 768) {
+                      setShowThumbnails(false);
+                    }
                   }}
-                >
-                  <img src={src} alt={`Page ${index + 1}`} />
-                  <span className="thumbnail-label">{index + 1}</span>
-                </div>
+                />
               ))}
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
