@@ -37,10 +37,17 @@
   );
 }
 
-/* 书页 */
 .page-item {
-  background: #fff;
+  background: #ffffff !important; /* Force opaque background */
+  background-color: #ffffff !important;
   overflow: hidden;
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.1); /* Slight inner shadow to define edge */
+}
+
+/* 确保 page-flip 内部生成的层也是不透明的 */
+.stf__item,
+.stf__block {
+  background-color: #ffffff !important;
 }
 
 .page-item img {
@@ -48,7 +55,7 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  background: #fff;
+  background: #ffffff;
 }
 
 /* 硬质封面页 */
