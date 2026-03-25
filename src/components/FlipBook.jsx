@@ -1,8 +1,8 @@
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { PageFlip } from 'page-flip';
 import './FlipBook.css';
 
-export default function FlipBook({ pages, pageSize, onPageChange }) {
+export default function FlipBook({ pages, pageSize, onPageChange, initialPage = 0 }) {
   const bookRef = useRef(null);
   const pageFlipRef = useRef(null);
 
@@ -124,7 +124,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
         startZIndex: 10,
         autoSize: true,
         drawShadow: true,
-        startPage: 0,
+        startPage: Math.max(0, Math.min(initialPage, pages.length - 1)),
       });
 
       pageFlip.loadFromHTML(container.querySelectorAll('.page-item'));
@@ -145,7 +145,7 @@ export default function FlipBook({ pages, pageSize, onPageChange }) {
         pageFlipRef.current = null;
       }
     };
-  }, [pages, pageSize, getDisplaySize, onPageChange]);
+  }, [pages, pageSize, getDisplaySize, onPageChange, initialPage]);
 
   // 暴露翻页方法供外部调用
   const flipNext = useCallback(() => {
